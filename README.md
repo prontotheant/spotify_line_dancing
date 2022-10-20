@@ -1,7 +1,6 @@
 # network-spotify-api-project
 
-Alex Patterson
-Jamie Parra  
+Alex Patterson and Jamie Parra  
 
 
 Project Idea:  
@@ -20,7 +19,4 @@ Project Idea:
 
 
 
-Using:
-Spotify API
-SQL lite
-HTML/CSS
+Using: Spotify API, SQL lite, HTML/CSS
