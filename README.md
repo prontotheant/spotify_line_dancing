@@ -19,4 +19,4 @@ Project Idea:
 
 
 
-Using: Spotify API, SQL lite, HTML/CSS
+Using: Spotify API, sqlite3, HTML/CSS, Flask
