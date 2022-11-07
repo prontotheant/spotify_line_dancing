@@ -1,4 +1,5 @@
 # Project Breakdown #
+Code was written separately by Jamie and Alex at the same time, next phase would be synthesizing the best parts of each individual effort into one and expanding functionality and connectivity
 ## As of 11/7/2022 ##
 ### app.py ###
 Can run project in pycharm terminal targeting app.py with: flask --app app --debug run
