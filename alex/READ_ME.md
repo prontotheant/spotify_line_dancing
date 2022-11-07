@@ -28,25 +28,25 @@ Contains sql to create a table with the columns: id, time added, title, artist
 This is the file that would need to be edited once a database design has been finalized, followed by a run of the initialize_database.py to implement the changes
 
 #### index.html ####
-Basic text, rudimentary css
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
+Currently displays database
 
 Hope to add search and temporary playlist to this page
 
 #### playlist.html ####
-Basic text, rudimentary css
+Currently no content
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
 
-Future for this page would:
-- be adding a form for playlist name, playlist description
+Future for this page would be:
+- add a form for playlist name, playlist description
 - display temporary playlist content
 - adding spotify log in or enter token
 - information confirmation alert 
-- then export to spotify functionality will require another .py 
+- then export to spotify functionality which will require another .py 
 
 #### add_song.html ####
-Basic text, uses form
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
+Currently has post functionality that connects to database, has a form to gather content
 
 would like to:
  -  add some sort of log in or security feature to reach this page
