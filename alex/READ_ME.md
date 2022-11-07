@@ -31,7 +31,20 @@ This is the file that would need to be edited once a database design has been fi
 Basic text, rudimentary css
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
 
+Hope to add search and temporary playlist to this page
+
 #### playlist.html ####
+Basic text, rudimentary css
+Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
+
+Future for this page would:
+- be adding a form for playlist name, playlist description
+- display temporary playlist content
+- adding spotify log in or enter token
+- information confirmation alert 
+- then export to spotify functionality will require another .py 
+
+#### add_song.html ####
 Basic text, uses form
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
 
@@ -40,8 +53,5 @@ would like to:
  -  connect this page with spotify to grab song id for entering songs into the database
  -  add that functionality along with fields specific to the dance information
       - possible connect to copperknob.co.uk may require webscraping if so
-
-#### add_song.html ####
-
 
 
