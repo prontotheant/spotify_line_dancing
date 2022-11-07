@@ -56,4 +56,15 @@ would like to:
  -  add that functionality along with fields specific to the dance information
       - possible connect to copperknob.co.uk may require webscraping if so
 
+## learning_spotifyAPI ##
+- confirmed how to grab songs with seed information
+- confirmed how to make a playlist, with a specific name, added songs, etc.. tested with personal account
+
+- confirmed what format of information must be sent to the API to populate with songs, 
+     - meaning the information needed to be stored in the database was discovered
+     - as well as the best way to modify the format of the raw information after extracting from database, before sending to spotify, in python
+
+- need to figure out what the best way to log in/get token would be, code support for this functionality is not written in python so may need to be translated
+- need to confirm how searching a specifc song would work
+
 
