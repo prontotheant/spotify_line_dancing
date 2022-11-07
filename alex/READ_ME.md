@@ -29,13 +29,13 @@ This is the file that would need to be edited once a database design has been fi
 
 #### index.html ####
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
+
 Currently displays database
 
 Hope to add search and temporary playlist to this page
 
 #### playlist.html ####
 Currently no content
-Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
 
 Future for this page would be:
 - add a form for playlist name, playlist description
@@ -46,6 +46,7 @@ Future for this page would be:
 
 #### add_song.html ####
 Contains flask subservice jinja specific formatting that only looks good when run from terminal with flask
+
 Currently has post functionality that connects to database, has a form to gather content
 
 would like to:
