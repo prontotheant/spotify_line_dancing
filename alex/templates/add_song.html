@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Song to Database</title>
+    <style>
+        body {
+            background-color: MidnightBlue;
+            text-align: center;
+        }
+        div {
+            color: white;
+        }
+        nav {
+            font-color: red;
+        }
+        h1 {
+            color: Lime;
+            font-family: CourierNew, monospace;
+            text-align: center;
+        }
+        .alert {
+            padding: 20px;
+            margin: 5px;
+            color: #970020;
+            background-color: #ffd5de;
+        }
+    </style>
+</head>
+<body>
+    <h1>{% block title %} Add a New Song {% endblock %}</h1>
+    <nav>
+        <a href="{{ url_for('hello') }}">Home</a>
+    </nav>
+    <form method="post">
+        <label>Artist</label>
+        <br>
+        <input type="text" name="artist"
+               placeholder="Song Artist"
+               value="{{ request.form['artist'] }}"></input>
+        <br>
+
+        <label>Title</label>
+        <br>
+        <textarea name="title"
+                  placeholder="Song title"
+                  rows="15"
+                  cols="60"
+                  >{{ request.form['title'] }}</textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <div class="content">
+        {% for message in get_flashed_messages() %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+
+        {% block content %} {% endblock %}</div>
+</body>
+</html>

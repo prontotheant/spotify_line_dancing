@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <style>
+        body {
+            background-color: MidnightBlue;
+            text-align: center;
+        }
+        div {
+            color: white;
+        }
+        nav {
+            font-color: red;
+        }
+        h1 {
+            color: Lime;
+            font-family: CourierNew, monospace;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to line dancing with Spotify</h1>
+    <div class="content">
+        {% block content %}
+            <h1>{% block title %} Songs {% endblock %}</h1>
+            {% for song in songs %}
+                <div class='song'>
+                    <p>{{ song['added'] }}</p>
+                    <h2>{{ song['artist'] }}</h2>
+                    <p>{{ song['title'] }}</p>
+                </div>
+            {% endfor %}
+        {% endblock %}
+    </div>
+    <nav>
+        <a href="{{ url_for('playlist') }}">Make a Playlist</a>
+    </nav>
+</body>
+</html>
