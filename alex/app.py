@@ -9,7 +9,7 @@ purpose: contain flask app functions
 # second had to
 # import Flask object
 import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for, flash, redirect, make_response, session
 
 # third had to
 # create a flask object in the project
@@ -25,13 +25,32 @@ def database_connection():
 
 # fourth add decorator
 # a decorator is:
-@app.route('/')  # this one in particular changes the return value into an http response
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])  # this one in particular changes the return value into an http response
+@app.route('/index', methods=['GET', 'POST'])
 def hello():
-    connection = database_connection()
-    songs = connection.execute('SELECT * from songs').fetchall()
-    connection.close()
-    return render_template('index.html', songs=songs)
+    step_i = 1, 2, 3
+    if request.method == "POST":
+        connection = database_connection()
+        select = request.form.get('dances')
+        sql_try = f'SELECT title, artist from songs JOIN dances on songs.song_id = dances.song_id and step_id = {select}'
+        songs = connection.execute(sql_try).fetchall()
+        steps = connection.execute('SELECT * from step_sheets').fetchall()
+        return render_template('index.html', songs=songs, steps=steps, mother=step_i)
+    else:
+        connection = database_connection()
+    # sql_try = f'SELECT title, artist from songs JOIN dances on songs.song_id = dances.song_id and step_id = {step_i}'
+    # songs = connection.execute(sql_try).fetchall()
+    # songs = connection.execute('SELECT * from songs').fetchall()
+    # steps = connection.execute('SELECT * from step_sheets').fetchall()
+    # connection.close()
+        crock = 1
+        sql_try = f'SELECT title, artist from songs JOIN dances on songs.song_id = dances.song_id and step_id = {crock}'
+        songs = connection.execute(sql_try).fetchall()
+        steps = connection.execute('SELECT * from step_sheets').fetchall()
+        return render_template('index.html', songs=songs, steps=steps, mother=step_i)
+
+
+
 # fifth write function with decorator
 
 # sixth run flask in debug mode using
