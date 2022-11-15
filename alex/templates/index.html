@@ -26,13 +26,39 @@
     <div class="content">
         {% block content %}
             <h1>{% block title %} Songs {% endblock %}</h1>
+
+            <form method="POST">
+                    <select name="dances">
+                        {% for step in steps%}
+
+                        <option value="{{step['step_id']}}">{{ step['step_name'] }}</option>
+
+                        {% endfor %}
+                    </select>
+                <input type="submit" value="GO"/>
+            </form>
+
+
+            {% for step in steps%}
+                 <div class='step'>
+                     <p>{{ step['step_id'] }}</p>
+                    <h2>{{ step['step_name'] }}</h2>
+                    <p>{{ step['walls'] }}</p>
+                 </div>
+            {% endfor %}
+
             {% for song in songs %}
                 <div class='song'>
-                    <p>{{ song['added'] }}</p>
-                    <h2>{{ song['artist'] }}</h2>
-                    <p>{{ song['title'] }}</p>
+                    <p>{{ song['song_id'] }}</p>
+                    <h2>{{ song['title'] }}</h2>
+                    <p>{{ song['artist'] }}</p>
                 </div>
             {% endfor %}
+
+            {% for fucker in mother %}
+                <p>{{fucker}}</p>
+            {% endfor %}
+
         {% endblock %}
     </div>
     <nav>
