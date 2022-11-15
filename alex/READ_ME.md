@@ -68,3 +68,12 @@ would like to:
 - need to confirm how searching a specifc song would work
 
 
+## 11/15/2022 ##
+- added form to index.html 
+- added functionality in app.py
+- designed database
+- added test content
+- considering web scraping https://www.copperknob.co.uk/ for songs and dances, would need to figure out spotify portion
+still need to:
+- implement session for logging in
+- then use spotify access with page
