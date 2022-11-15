@@ -74,6 +74,9 @@ would like to:
 - designed database
 - added test content
 - considering web scraping https://www.copperknob.co.uk/ for songs and dances, would need to figure out spotify portion
+
+
+
 still need to:
 - implement session for logging in
 - then use spotify access with page
