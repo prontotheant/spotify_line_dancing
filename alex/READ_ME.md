@@ -80,3 +80,15 @@ would like to:
 still need to:
 - implement session for logging in
 - then use spotify access with page
+## 11/16/2022 ## 
+added stylesheet
+
+Need to:
+- add three forms to add_song to easily add new info to each table without rewriting the database each time
+- figure out session
+- get html/css figured out for temporary playlist to stay on /index to the right of search
+- add grab token to makeplaylist
+- add a grab info from temporary playlist to make playlist
+- add form to grab the playlist name and description info
+- prevent export if no songs from temp playlist add alert
+- actually confirm it will connect to spotify
