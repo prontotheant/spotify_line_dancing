@@ -85,6 +85,7 @@ added stylesheet
 
 Need to:
 - add three forms to add_song to easily add new info to each table without rewriting the database each time
+- figure out searching spotify for specific song and add to the add_song page
 - figure out session
 - get html/css figured out for temporary playlist to stay on /index to the right of search
 - add grab token to makeplaylist
