@@ -4,21 +4,6 @@
     <meta charset="UTF-8">
     <title>Add Song to Database</title>
     <style>
-        body {
-            background-color: MidnightBlue;
-            text-align: center;
-        }
-        div {
-            color: white;
-        }
-        nav {
-            font-color: red;
-        }
-        h1 {
-            color: Lime;
-            font-family: CourierNew, monospace;
-            text-align: center;
-        }
         .alert {
             padding: 20px;
             margin: 5px;
@@ -26,6 +11,7 @@
             background-color: #ffd5de;
         }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bromine.css') }}"/>
 </head>
 <body>
     <h1>{% block title %} Add a New Song {% endblock %}</h1>

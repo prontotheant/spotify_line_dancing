@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bromine.css') }}"/>
     <title>Main</title>
-    <style>
-        body {
-            background-color: MidnightBlue;
-            text-align: center;
-        }
-        div {
-            color: white;
-        }
-        nav {
-            font-color: red;
-        }
-        h1 {
-            color: Lime;
-            font-family: CourierNew, monospace;
-            text-align: center;
-        }
-    </style>
+
 </head>
 <body>
+<img src="{{ url_for('static', filename='images/dance.jpg')}}" style="width:15%;height:15%;"/>
 <h1>Welcome to line dancing with Spotify</h1>
+<hr style="width:50%;">
     <div class="content">
         {% block content %}
-            <h1>{% block title %} Songs {% endblock %}</h1>
+            <h2>{% block title %} Search by Dance {% endblock %}</h2>
 
             <form method="POST">
                     <select name="dances">
@@ -38,25 +26,12 @@
                 <input type="submit" value="GO"/>
             </form>
 
-
-            {% for step in steps%}
-                 <div class='step'>
-                     <p>{{ step['step_id'] }}</p>
-                    <h2>{{ step['step_name'] }}</h2>
-                    <p>{{ step['walls'] }}</p>
-                 </div>
-            {% endfor %}
-
             {% for song in songs %}
                 <div class='song'>
                     <p>{{ song['song_id'] }}</p>
-                    <h2>{{ song['title'] }}</h2>
+                    <h3>{{ song['title'] }}</h3>
                     <p>{{ song['artist'] }}</p>
                 </div>
-            {% endfor %}
-
-            {% for fucker in mother %}
-                <p>{{fucker}}</p>
             {% endfor %}
 
         {% endblock %}
