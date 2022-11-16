@@ -1,1 +1,24 @@
+h1 {
+    color: white;
+    font-family: CourierNew, monospace;
+    text-align: center;
+}
+h2 {
+     color: lime;
+     font-family: CourierNew, monospace;
+     text-align: center;
+}
+body {
+    background-color: Black;
+    text-align: center;
+}
+div {
+    color: white;
+}
+nav {
+    font-color: red;
+}
+
+
+
 
