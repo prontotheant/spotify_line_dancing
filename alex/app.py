@@ -7,12 +7,15 @@ purpose: contain flask app functions
 # pip install flask
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect, make_response, session
+import random
+import math
 
 # flask object
 app = Flask(__name__)
 
 # may have to use for sessions or something
-app.config['SECRET_KEY'] = 'peanutbutter'
+key = math.floor(random.random() * 23456)
+app.config['SECRET_KEY'] = f'{key}'
 
 # run in terminal with:
 # flask --app app --debug run
