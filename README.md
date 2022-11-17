@@ -5,7 +5,7 @@ Alex Patterson and Jamie Parra
 
 Project Idea:  
 
- - For line dancing instructors or practicing dancers to create playlists around the dances they know or need to teach  
+ - For line dancing instructors or practicing dancers to create playlists around they need to teach or the dances they know 
   
  
 
