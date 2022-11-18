@@ -42,7 +42,7 @@ def hello():
     still need to add temporary playlist session situation and format displayed content in the html file
     :return: rendered page
     """
-    session['temp_playlist'] = 2, 4, 6
+    session['temp_playlist'] = 6, 2, 5
     temp_count = 1, 2, 3, 4, 5
     if request.method == "POST":
         connection = database_connection()
@@ -52,8 +52,12 @@ def hello():
                   f"step_id = {session['dance_choice']}"
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
+        song_info = []
+        for x in session['temp_playlist']:
+            sql_temp = f"SELECT title, artist from songs where song_id={x}"
+            song_info.append(connection.execute(sql_temp).fetchall())
         connection.close()
-        return render_template('index.html', songs=songs, steps=steps, temp=temp_count)
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count, play=song_info)
 
     else:
         connection = database_connection()
@@ -62,8 +66,12 @@ def hello():
                   f"{session['dance_choice']}"
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
+        song_info = []
+        for x in session['temp_playlist']:
+            sql_temp = f"SELECT title, artist from songs where song_id={x}"
+            song_info.append(connection.execute(sql_temp).fetchall())
         connection.close()
-        return render_template('index.html', songs=songs, steps=steps, temp=temp_count)
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count, play=song_info)
 
 
 @app.route('/playlist')
