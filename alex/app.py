@@ -43,6 +43,7 @@ def hello():
     :return: rendered page
     """
     session['temp_playlist'] = 2, 4, 6
+    temp_count = 1, 2, 3, 4, 5
     if request.method == "POST":
         connection = database_connection()
         if request.form.get('dances'):
@@ -52,9 +53,7 @@ def hello():
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         connection.close()
-        if request.form.get("add_to_play"):
-            session['temp_playlist'] = session['temp_playlist'] + request.form["add_to_play"]
-        return render_template('index.html', songs=songs, steps=steps, temp=session['temp_playlist'])
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count)
 
     else:
         connection = database_connection()
@@ -64,7 +63,7 @@ def hello():
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         connection.close()
-        return render_template('index.html', songs=songs, steps=steps)
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count)
 
 
 @app.route('/playlist')
