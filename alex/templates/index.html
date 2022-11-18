@@ -51,8 +51,11 @@
         <table style="width:400px;">
             <th> Playlist </th>
             {% for x in temp %}
+            {% if play[x-1]%}
+            <tr><td> {{x}}: {{play[x-1][0]['title']}} by {{play[x-1][0]['artist']}} </td></tr>
+            {% else %}
             <tr><td> {{x}}: </td></tr>
-
+            {% endif %}
             {% endfor %}
         </table>
         {% endblock %}
