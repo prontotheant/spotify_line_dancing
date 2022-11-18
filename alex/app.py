@@ -42,18 +42,25 @@ def hello():
     still need to add temporary playlist session situation and format displayed content in the html file
     :return: rendered page
     """
+    session['temp_playlist'] = 2, 4, 6
     if request.method == "POST":
         connection = database_connection()
-        select = request.form.get('dances')
-        sql_try = f'SELECT title, artist from songs JOIN dances on songs.song_id = dances.song_id and step_id = {select}'
+        if request.form.get('dances'):
+            session['dance_choice'] = request.form.get('dances')
+        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and " \
+                  f"step_id = {session['dance_choice']}"
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         connection.close()
-        return render_template('index.html', songs=songs, steps=steps)
+        if request.form.get("add_to_play"):
+            session['temp_playlist'] = session['temp_playlist'] + request.form["add_to_play"]
+        return render_template('index.html', songs=songs, steps=steps, temp=session['temp_playlist'])
+
     else:
         connection = database_connection()
-        home = 1
-        sql_try = f'SELECT title, artist from songs JOIN dances on songs.song_id = dances.song_id and step_id = {home}'
+        session['dance_choice'] = 1
+        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and step_id = " \
+                  f"{session['dance_choice']}"
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         connection.close()
@@ -93,5 +100,5 @@ def add_song():
             return redirect(url_for('hello'))
     return render_template('add_song.html')
 
-
-
+# HTML INDEX for image if want to add back
+# <img src="{{ url_for('static', filename='images/dance.jpg')}}" style="width:15%;height:15%;"/>
