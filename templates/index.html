@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bromine.css') }}"/>
+    <title>Main</title>
+
+</head>
+<body>
+<h1 >Welcome to line dancing with Spotify</h1>
+<hr style="width:70%;">
+    <div class="content" style="column-count:2;">
+        {% block content %}
+            <h2 style="column-span:all;">{% block title %} Search by Dance {% endblock %}</h2>
+
+            <form method="POST" style="column-span:all;">
+                    <select name="dances">
+                        {% for step in steps%}
+
+                        <option value="{{step['step_id']}}">{{ step['step_name'] }}</option>
+
+                        {% endfor %}
+                    </select>
+                <input type="submit" value="GO"/>
+            </form>
+            <hr style="width:50%;column-span:all;">
+
+            <form method="POST" name="add_to_play" id="add_to_play">
+            </form>
+            <table style="float:right;">
+                <th> Song Name </th>
+                <th> Artist </th>
+                <th> Add </th>
+            {% for song in songs %}
+                <tr>
+                    <td style="width:200px">{{ song['title'] }}</td>
+                    <td style="width:200px">{{ song['artist'] }}</td>
+
+                    <td>
+                        <input type="checkbox" form="add_to_play" value="{{ song['song_id'] }}" />
+
+                    </td>
+                </tr>
+            {% endfor %}
+                <tr> <td colspan="3" style="text-align:center;"><button type="submit" form="add_to_play"> Add to Playlist </button> </td></tr>
+            </table>
+
+
+
+        <table style="width:400px;">
+            <th> Playlist </th>
+            {% for x in temp %}
+            {% if play[x-1]%}
+            <tr><td> {{x}}: {{play[x-1][0]['title']}} by {{play[x-1][0]['artist']}} </td></tr>
+            {% else %}
+            <tr><td> {{x}}: </td></tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+        {% endblock %}
+    </div>
+
+    <nav>
+        <a href="{{ url_for('playlist') }}">Export to Spotify</a>
+    </nav>
+</body>
+</html>
