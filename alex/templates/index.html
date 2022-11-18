@@ -8,14 +8,13 @@
 
 </head>
 <body>
-<img src="{{ url_for('static', filename='images/dance.jpg')}}" style="width:15%;height:15%;"/>
-<h1>Welcome to line dancing with Spotify</h1>
-<hr style="width:50%;">
-    <div class="content">
+<h1 >Welcome to line dancing with Spotify</h1>
+<hr style="width:70%;">
+    <div class="content" style="column-count:2;">
         {% block content %}
-            <h2>{% block title %} Search by Dance {% endblock %}</h2>
+            <h2 style="column-span:all;">{% block title %} Search by Dance {% endblock %}</h2>
 
-            <form method="POST">
+            <form method="POST" style="column-span:all;">
                     <select name="dances">
                         {% for step in steps%}
 
@@ -25,19 +24,43 @@
                     </select>
                 <input type="submit" value="GO"/>
             </form>
+            <hr style="width:50%;column-span:all;">
 
+            <form method="POST" name="add_to_play" id="add_to_play">
+            </form>
+            <table style="float:right;">
+                <th> Song Name </th>
+                <th> Artist </th>
+                <th> Add </th>
             {% for song in songs %}
-                <div class='song'>
-                    <p>{{ song['song_id'] }}</p>
-                    <h3>{{ song['title'] }}</h3>
-                    <p>{{ song['artist'] }}</p>
-                </div>
-            {% endfor %}
+                <tr>
+                    <td style="width:200px">{{ song['title'] }}</td>
+                    <td style="width:200px">{{ song['artist'] }}</td>
 
+                    <td>
+                        <input type="checkbox" form="add_to_play" value="{{ song['song_id'] }}" />
+
+                    </td>
+                </tr>
+            {% endfor %}
+                <tr> <td colspan="3" style="text-align:center;"><button type="submit" form="add_to_play"> Add to Playlist </button> </td></tr>
+            </table>
+
+
+
+        <table style="width:400px;">
+            <th> Playlist </th>
+            <tr><td> 1: </td></tr>
+            <tr><td> 2: </td></tr>
+            <tr><td> 3: </td></tr>
+            <tr><td> 4: </td></tr>
+            <tr><td> 5: </td></tr>
+        </table>
         {% endblock %}
     </div>
+
     <nav>
-        <a href="{{ url_for('playlist') }}">Make a Playlist</a>
+        <a href="{{ url_for('playlist') }}">Export to Spotify</a>
     </nav>
 </body>
 </html>
