@@ -1,61 +1,111 @@
+"""
+file: app.py
+author: A. Patterson
+purpose: contain flask app functions
+"""
+# first had to install flask using:
+# pip install flask
 import sqlite3
+from flask import Flask, render_template, request, url_for, flash, redirect, make_response, session
 import random
-from flask import Flask, session, render_template, request, g
-import os.path
+import math
 
-BASE_DIR = os.path.dirname(os.path.abspath("spotify_list.db"))
-db_path = os.path.join(BASE_DIR, "spotify_list.db")
-with sqlite3.connect(db_path) as db:
+# flask object
+app = Flask(__name__)
 
-    app = Flask(__name__)
-app.secret_key = "manbearpig_MUDMAN888"
-app.config["SESSION_COOKIE_NAME"] = "myCOOKIE_monSTER528"
+# may have to use for sessions or something
+key = math.floor(random.random() * 23456)
+app.config['SECRET_KEY'] = f'{key}'
 
-@app.route("/", methods=["POST", "GET"])
-def index():
-    session["all_items"], session["shopping_items"] = get_db()
-    return render_template("index.html", all_items=session["all_items"],
-                                         shopping_items=session["shopping_items"])
+# run in terminal with:
+# flask --app app --debug run
 
-@app.route("/add_items", methods=["post"])
-def add_items():
-    session["shopping_items"].append(request.form["select_items"])
-    session.modified = True
-    return render_template("index.html", all_items=session["all_items"],
-                                         shopping_items=session["shopping_items"])
+# when run, website is found at:
+# http://127.0.0.1:5000
 
-@app.route("/remove_items", methods=["post"])
-def remove_items():
-    checked_boxes = request.form.getlist("check")
 
-    for item in checked_boxes:
-        if item in session["shopping_items"]:
-            idx = session["shopping_items"].index(item)
-            session["shopping_items"].pop(idx)
-            session.modified = True
+def database_connection():
+    """
+    :return: connection to database (file?)
+    """
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    return connection
 
-    return render_template("index.html", all_items=session["all_items"],
-                                         shopping_items=session["shopping_items"])
 
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect('spotify_list.db')
-        cursor = db.cursor()
-        cursor.execute("select song from list")
-        all_data = cursor.fetchall()
-        all_data = [str(val[0]) for val in all_data]
+# below is a decorator, this one changes the return value into an http response
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+def hello():
+    """
+    function changes content to display depending on request method and input from POST
+    still need to add temporary playlist session situation and format displayed content in the html file
+    :return: rendered page
+    """
+    session['temp_playlist'] = 6, 2, 5
+    temp_count = 1, 2, 3, 4, 5
+    if request.method == "POST":
+        connection = database_connection()
+        if request.form.get('dances'):
+            session['dance_choice'] = request.form.get('dances')
+        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and " \
+                  f"step_id = {session['dance_choice']}"
+        songs = connection.execute(sql_try).fetchall()
+        steps = connection.execute('SELECT * from step_sheets').fetchall()
+        song_info = []
+        for x in session['temp_playlist']:
+            sql_temp = f"SELECT title, artist from songs where song_id={x}"
+            song_info.append(connection.execute(sql_temp).fetchall())
+        connection.close()
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count, play=song_info)
 
-        shopping_list = all_data.copy()
-        random.shuffle(shopping_list)
-        shopping_list = shopping_list[:5]
-    return all_data, shopping_list
+    else:
+        connection = database_connection()
+        session['dance_choice'] = 1
+        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and step_id = " \
+                  f"{session['dance_choice']}"
+        songs = connection.execute(sql_try).fetchall()
+        steps = connection.execute('SELECT * from step_sheets').fetchall()
+        song_info = []
+        for x in session['temp_playlist']:
+            sql_temp = f"SELECT title, artist from songs where song_id={x}"
+            song_info.append(connection.execute(sql_temp).fetchall())
+        connection.close()
+        return render_template('index.html', songs=songs, steps=steps, temp=temp_count, play=song_info)
 
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
 
-if __name__ == '__main__':
-    app.run()
+@app.route('/playlist')
+def playlist():
+    """
+    need to add html form and functionality for playlist info, token, etc.
+    need to connect to spotify here
+    :return: rendered page
+    """
+    return render_template('playlist.html')
+
+
+@app.route('/add_song/', methods=('GET', 'POST'))
+def add_song():
+    """
+    currently grabs info and structured to enter data into old database
+    need to add 2 more forms and update to enter information into new database appropriately
+    would like to add search for a single song from spotify to this page may not have time
+    :return: rendered page
+    """
+    if request.method == 'POST':
+        artist = request.form['artist']
+        title = request.form['title']
+        if not artist:
+            flash('Artist is required')
+        elif not title:
+            flash('Title is required')
+        else:
+            connection = database_connection()
+            connection.execute('INSERT INTO songs (artist, title) VALUES (?, ?)', (artist, title))
+            connection.commit()
+            connection.close()
+            return redirect(url_for('hello'))
+    return render_template('add_song.html')
+
+# HTML INDEX for image if want to add back
+# <img src="{{ url_for('static', filename='images/dance.jpg')}}" style="width:15%;height:15%;"/>
