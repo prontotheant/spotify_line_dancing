@@ -25,18 +25,17 @@ def spot_api_playlist(token, s_username, spot_ids, p_name, p_desc):
     play = requests.post(url=endpoint_url, data=play_info, headers={"Content-Type": "application/json",
                                                                     "Authorization": f"Bearer {token}"})
 
-    return play.status_code
+    endpoint_url = f"https://api.spotify.com/v1/playlists/{play.json()['id']}/tracks"
 
-    #endpoint_url = f"https://api.spotify.com/v1/playlists/{play.json()['id']}/tracks"
-    #
-    #songs = json.dumps({
-    #    "uris": packaged_for_spot
-    #})
-    #
-    #complete = requests.post(url=endpoint_url, data=songs, headers={"Content-Type": "application/json",
-    #                                                                "Authorization": f"Bearer {token}"})
-    #if complete.status_code == "":
-    #    return 1
-    #else:
-    #    return 0
-    #
+    songs = json.dumps({
+        "uris": packaged_for_spot
+    })
+
+    complete = requests.post(url=endpoint_url, data=songs, headers={"Content-Type": "application/json",
+                                                                    "Authorization": f"Bearer {token}"})
+
+    return complete.status_code
+
+
+
+

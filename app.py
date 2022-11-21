@@ -128,14 +128,15 @@ def test():
     connection = database_connection()
     spotify_ids = []
     for x in rock:
-        sp_id = connection.execute(f"SELECT spotify_id from songs where song_id={x}")
-        spotify_ids.append(sp_id)
+        sp_id = connection.execute(f"SELECT spotify_id from songs where song_id={x}").fetchall()
+        spotify_ids.append(sp_id[0]['spotify_id'])
+
 
     cool = spot_api_playlist(
-        "BQBI68h_oEQdu_wcWf2KQaTP4XpRF1xrhg8CDY-zZ0efywWXVP4eRL1bgie_e9sNFlkVNsvVC0dpNs0Cwqcoo1Jz-nKUofAW4R2c80s5NdxQ6GAEACfc0LWklMiT83W3-UyYNPSZxpKEOOlmbZSkcdIoyAIbaZl3vGY0tlcjq8dAqfzyJgJRtutYaM44ZBTxiXHB1ZRulaI7SMONjA",
-        "prontotheant",
+       "BQBcfjz6AAyvLi4cCCqUcdM-iMimz2YJuHhKq504TR6tIyWxTeyW-XLHSKSkv2KC84TtaAHaEN_PBH6wpiRHf_XFoonSDx3jPtp_2cE-d5nSNaOL1IzYQNQot7vzVhdOOlYejvvYECXqEpnqQUCg31rdcNVAReSH2UAcOv10_jrjzYuktATPmCihpbqtJP9KEv-P9HbUoZQ5q4Dz3Q",
+       "prontotheant",
         spotify_ids,
-        "test-bro",
+        "test-bro3",
         "testing code for realsies"
     )
     return render_template('test.html', test=cool)
