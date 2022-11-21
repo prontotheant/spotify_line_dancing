@@ -42,6 +42,7 @@ def hello():
     still need to add temporary playlist session situation and format displayed content in the html file
     :return: rendered page
     """
+
     session['temp_playlist'] = 6, 2, 5
     temp_count = 1, 2, 3, 4, 5
     if request.method == "POST":
@@ -81,6 +82,7 @@ def playlist():
     need to connect to spotify here
     :return: rendered page
     """
+
     return render_template('playlist.html')
 
 
