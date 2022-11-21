@@ -3,10 +3,17 @@ file: app.py
 author: A. Patterson
 purpose: contain flask app functions
 """
+# considering adding a blank record in database
+# to repeatedly call when initializing temp_playlist
+# still not saving changes when doing GET requests
+# not sure why I can only overwrite and not get new info to stick
+# not sure why only one new check box info is grabbed
+
+
 # first had to install flask using:
 # pip install flask
 import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect, make_response, session
+from flask import Flask, render_template, request, url_for, flash, redirect, session
 import random
 import math
 
@@ -42,15 +49,25 @@ def hello():
     still need to add temporary playlist session situation and format displayed content in the html file
     :return: rendered page
     """
-
-    session['temp_playlist'] = 6, 2, 5
-    temp_count = 1, 2, 3, 4, 5
+    temp_count = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     if request.method == "POST":
-        connection = database_connection()
-        if request.form.get('dances'):
-            session['dance_choice'] = request.form.get('dances')
-        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and " \
+        if 'dances' in request.form:
+            session['dance_choice'] = request.form['dances']
+        if 'huck' in request.form:
+            gel = request.form['huck']
+            for y in gel:
+                session['temp_playlist'].append(int(y))
+                # I spent at least 2 hours discovering that to more permanently affect the session['tem...]
+                # you must be reassigning it, so append alone doesn't work
+                rock = session['temp_playlist']
+                if len(rock) < 11:
+                    session['temp_playlist'] = rock
+                # trying to implement an else here messes with the session[tem...] list and makes it add continuously
+                # ignoring the conditional for whatever strange reasons
+
+        sql_try = f"SELECT title, artist, songs.song_id from songs JOIN dances on songs.song_id = dances.song_id and " \
                   f"step_id = {session['dance_choice']}"
+        connection = database_connection()
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         song_info = []
@@ -63,8 +80,9 @@ def hello():
     else:
         connection = database_connection()
         session['dance_choice'] = 1
-        sql_try = f"SELECT * from songs JOIN dances on songs.song_id = dances.song_id and step_id = " \
-                  f"{session['dance_choice']}"
+        session['temp_playlist'] = []
+        sql_try = f"SELECT title, artist, songs.song_id from songs JOIN dances on songs.song_id = dances.song_id and " \
+                  f"step_id = {session['dance_choice']}"
         songs = connection.execute(sql_try).fetchall()
         steps = connection.execute('SELECT * from step_sheets').fetchall()
         song_info = []
@@ -82,7 +100,6 @@ def playlist():
     need to connect to spotify here
     :return: rendered page
     """
-
     return render_template('playlist.html')
 
 
@@ -109,5 +126,3 @@ def add_song():
             return redirect(url_for('hello'))
     return render_template('add_song.html')
 
-# HTML INDEX for image if want to add back
-# <img src="{{ url_for('static', filename='images/dance.jpg')}}" style="width:15%;height:15%;"/>

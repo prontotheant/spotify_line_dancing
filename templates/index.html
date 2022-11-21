@@ -36,9 +36,10 @@
                 <tr>
                     <td style="width:200px">{{ song['title'] }}</td>
                     <td style="width:200px">{{ song['artist'] }}</td>
+                    <td>{{song['song_id']}}</td>
 
                     <td>
-                        <input type="checkbox" form="add_to_play" value="{{ song['song_id'] }}" />
+                        <input type="checkbox" form="add_to_play" name="huck" value="{{ song['song_id'] }}" />
 
                     </td>
                 </tr>
@@ -58,6 +59,11 @@
             {% endif %}
             {% endfor %}
         </table>
+
+        {% for message in get_flashed_messages() %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+
         {% endblock %}
     </div>
 
