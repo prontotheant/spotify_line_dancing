@@ -3,12 +3,6 @@ file: app.py
 author: A. Patterson
 purpose: contain flask app functions
 """
-# considering adding a blank record in database
-# to repeatedly call when initializing temp_playlist
-# still not saving changes when doing GET requests
-# not sure why I can only overwrite and not get new info to stick
-# not sure why only one new check box info is grabbed
-
 
 # first had to install flask using:
 # pip install flask
@@ -16,6 +10,7 @@ import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect, session
 import random
 import math
+from spotify_playlist import spot_api_playlist
 
 # flask object
 app = Flask(__name__)
@@ -125,4 +120,23 @@ def add_song():
             connection.close()
             return redirect(url_for('hello'))
     return render_template('add_song.html')
+
+
+@app.route('/test', methods=('GET', 'POST'))
+def test():
+    rock = session['temp_playlist']
+    connection = database_connection()
+    spotify_ids = []
+    for x in rock:
+        sp_id = connection.execute(f"SELECT spotify_id from songs where song_id={x}")
+        spotify_ids.append(sp_id)
+
+    cool = spot_api_playlist(
+        "BQBI68h_oEQdu_wcWf2KQaTP4XpRF1xrhg8CDY-zZ0efywWXVP4eRL1bgie_e9sNFlkVNsvVC0dpNs0Cwqcoo1Jz-nKUofAW4R2c80s5NdxQ6GAEACfc0LWklMiT83W3-UyYNPSZxpKEOOlmbZSkcdIoyAIbaZl3vGY0tlcjq8dAqfzyJgJRtutYaM44ZBTxiXHB1ZRulaI7SMONjA",
+        "prontotheant",
+        spotify_ids,
+        "test-bro",
+        "testing code for realsies"
+    )
+    return render_template('test.html', test=cool)
 
