@@ -11,6 +11,8 @@ h2 {
 body {
     background-color: Black;
     text-align: center;
+    color:white;
+
 }
 div {
     color: white;
@@ -21,14 +23,17 @@ nav {
 th{
     color: black;
     font-family: monospace;
+    font-size: 15px;
     padding: 15px 15px 15px 15px;
     text-align: left;
-    background-color: darkseagreen;
+    background-color: #1DB954;
+    border-radius: 10px;
 }
 td{
     color: black;
     font-family: monospace;
     padding: 15px 15px 15px 15px;
+    border-radius:10px;
     text-align: left;
     background-color: silver;
 }
@@ -37,7 +42,16 @@ a{
     font-size: 20px;
     padding: 15px 15px 15px 15px;
 }
-
+label{
+    font-family:monospace;
+    font-size: 20px;
+    padding: 15px 15px 15px 15px;
+}
+.alert{
+    font-size: 25px;
+    color: chartreuse;
+    font-family: monospace;
+}
 
 
 
