@@ -9,6 +9,7 @@
 </head>
 <body>
 <h1 >Welcome to line dancing with Spotify</h1>
+
 <hr style="width:70%;">
     <div class="content" style="column-count:2;">
         {% block content %}
@@ -24,6 +25,7 @@
                     </select>
                 <input type="submit" value="GO"/>
             </form>
+            <br>
             <hr style="width:50%;column-span:all;">
 
             <form method="POST" name="add_to_play" id="add_to_play">
@@ -36,8 +38,6 @@
                 <tr>
                     <td style="width:200px">{{ song['title'] }}</td>
                     <td style="width:200px">{{ song['artist'] }}</td>
-                    <td>{{song['song_id']}}</td>
-
                     <td>
                         <input type="checkbox" form="add_to_play" name="huck" value="{{ song['song_id'] }}" />
 
@@ -66,7 +66,7 @@
 
         {% endblock %}
     </div>
-
+    <br>
     <nav>
         <a href="{{ url_for('playlist') }}">Export to Spotify</a>
     </nav>
