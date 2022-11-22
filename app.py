@@ -15,7 +15,7 @@ from spotify_playlist import spot_api_playlist
 # flask object
 app = Flask(__name__)
 
-# may have to use for sessions or something
+# pretty sure this is used for session
 key = math.floor(random.random() * 23456)
 app.config['SECRET_KEY'] = f'{key}'
 
@@ -41,10 +41,9 @@ def database_connection():
 def hello():
     """
     function changes content to display depending on request method and input from POST
-    still need to add temporary playlist session situation and format displayed content in the html file
     :return: rendered page
     """
-    temp_count = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    temp_count = 1, 2, 3, 4, 5, 6, 7, 8
     if request.method == "POST":
         if 'dances' in request.form:
             session['dance_choice'] = request.form['dances']
@@ -88,14 +87,38 @@ def hello():
         return render_template('index.html', songs=songs, steps=steps, temp=temp_count, play=song_info)
 
 
-@app.route('/playlist')
+@app.route('/playlist', methods=('GET', 'POST'))
 def playlist():
     """
-    need to add html form and functionality for playlist info, token, etc.
-    need to connect to spotify here
+    grabs necessary info from user, connects to spotify, generates and populates a playlist
     :return: rendered page
     """
-    return render_template('playlist.html')
+    temp_count = 1, 2, 3, 4, 5, 6, 7, 8
+    connection = database_connection()
+    song_info = []
+    for x in session['temp_playlist']:
+        sql_temp = f"SELECT title, artist from songs where song_id={x}"
+        song_info.append(connection.execute(sql_temp).fetchall())
+    if request.method == "POST":
+        uname = request.form['uname']
+        token = request.form['token']
+        play_name = request.form['pname']
+        if not uname:
+            flash("Must enter your username!")
+        elif not token:
+            flash("Must enter the token!")
+        elif not play_name:
+            flash("Please enter a name for the playlist!")
+        else:
+            rock = session['temp_playlist']
+            connection = database_connection()
+            spotify_ids = []
+            for x in rock:
+                sp_id = connection.execute(f"SELECT spotify_id from songs where song_id={x}").fetchall()
+                spotify_ids.append(sp_id[0]['spotify_id'])
+            paper = spot_api_playlist(token, uname, spotify_ids, play_name)
+
+    return render_template('playlist.html', temp=temp_count, play=song_info)
 
 
 @app.route('/add_song/', methods=('GET', 'POST'))
@@ -120,24 +143,3 @@ def add_song():
             connection.close()
             return redirect(url_for('hello'))
     return render_template('add_song.html')
-
-
-@app.route('/test', methods=('GET', 'POST'))
-def test():
-    rock = session['temp_playlist']
-    connection = database_connection()
-    spotify_ids = []
-    for x in rock:
-        sp_id = connection.execute(f"SELECT spotify_id from songs where song_id={x}").fetchall()
-        spotify_ids.append(sp_id[0]['spotify_id'])
-
-
-    cool = spot_api_playlist(
-       "BQBcfjz6AAyvLi4cCCqUcdM-iMimz2YJuHhKq504TR6tIyWxTeyW-XLHSKSkv2KC84TtaAHaEN_PBH6wpiRHf_XFoonSDx3jPtp_2cE-d5nSNaOL1IzYQNQot7vzVhdOOlYejvvYECXqEpnqQUCg31rdcNVAReSH2UAcOv10_jrjzYuktATPmCihpbqtJP9KEv-P9HbUoZQ5q4Dz3Q",
-       "prontotheant",
-        spotify_ids,
-        "test-bro3",
-        "testing code for realsies"
-    )
-    return render_template('test.html', test=cool)
-

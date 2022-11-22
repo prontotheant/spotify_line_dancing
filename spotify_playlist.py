@@ -7,7 +7,7 @@ import json
 import requests
 
 
-def spot_api_playlist(token, s_username, spot_ids, p_name, p_desc):
+def spot_api_playlist(token, s_username, spot_ids, p_name):
     packaged_for_spot = []
     for s_id in spot_ids:
         mask = "spotify:track:"
@@ -18,7 +18,7 @@ def spot_api_playlist(token, s_username, spot_ids, p_name, p_desc):
 
     play_info = json.dumps({
         "name": f"{p_name}",
-        "description": f"{p_desc}",
+        "description": f"Made with line dancing with Spotify",
         "public": False
     })
 
@@ -35,7 +35,4 @@ def spot_api_playlist(token, s_username, spot_ids, p_name, p_desc):
                                                                     "Authorization": f"Bearer {token}"})
 
     return complete.status_code
-
-
-
 
