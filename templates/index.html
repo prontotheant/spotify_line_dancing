@@ -39,12 +39,12 @@
                     <td style="width:200px">{{ song['title'] }}</td>
                     <td style="width:200px">{{ song['artist'] }}</td>
                     <td>
-                        <input type="checkbox" form="add_to_play" name="huck" value="{{ song['song_id'] }}" />
+                        <button type="submit" form="add_to_play" name="huck" value="{{ song['song_id'] }}" >+</button>
 
                     </td>
                 </tr>
             {% endfor %}
-                <tr> <td colspan="3" style="text-align:center;"><button type="submit" form="add_to_play"> Add to Playlist </button> </td></tr>
+
             </table>
 
 
