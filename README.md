@@ -8,3 +8,7 @@ pip install flask
 
 flask --app app --debug run
 
+## What's Complete ##
+
+## What Needs Work ##
+
